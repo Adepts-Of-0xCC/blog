@@ -7,15 +7,15 @@ description: Article about how to decrypt LeoStream Connect Broker files and exp
 image: 
 ---
 
-Dear Fell**owl**ship, today's homily is about a journey that begins with a few perl files encrypted by an ancient alchemy called **source filter** and ends with a shell as root. Please, take a seat and listen the story.
+Dear Fell**owl**ship, today's homily is about a journey that begins with a few perl files encrypted by an ancient alchemy called **source filter**, and ends with a shell as root. Please, take a seat and listen to the story.
 
 
 # Prayers at the foot of the Altar a.k.a. disclaimer
-*We reported the vulnerability to Leostream, but the tickets opened within their support platform went refused because we did not provided a customer license. We attempted to contact them again by email and twitter aswel without any luck. In this post we talk about version 8.2.37.0, this vulnerability may or may not be present in more recents versions. After all of our attempts and being the support for 8.2 branch ended this 30th September, we wrote this brief article.*
+*We reported the vulnerability to Leostream, but the tickets opened within their support platform were refused because we did not provide a customer license. We attempted to contact them again by email and twitter as well with no luck. In this post we talk about version 8.2.37.0, this vulnerability may or may not be present in more recent versions. After all our attempts, and being the support for 8.2 branch ended this September the 30th, we wrote this brief article.*
  
 # Introduction
 
-Leostream is a platform used to manage the connections from users to VDI, cloud desktop, and similar stuff. It support connections through SSH, VNC, Mechdyne TGX, etc. The platform is composed by 3 elements:
+Leostream is a platform used to manage the connections from users to VDI, cloud desktop, and similar stuff. It supports connections through SSH, VNC, Mechdyne TGX, etc. The platform is composed by 3 elements:
 
 - Leostream Gateway
 - Leostream Connection Broker
@@ -28,9 +28,9 @@ Leostream Architecture
 </figcaption>
 </figure>
 
-The Gateway component is usually internet facing and it is in charge of managing the firewall rules to forward the traffic to the Connection Broker, so it is not a "mandatory" element. In practice, only the Connection Broker and the client are required to manage the configured VDIs. Connection Broker can be also integrated with Active Directory, Radius, VPNs, etc. so pwn one and jackpot!. Leostream provides an old Connection Broker version as [VM flavour](https://www.leostream.com/resource/legacy-downloads/), so we can download it and ter it to pieces to check its guts.
+The Gateway component is usually internet-facing and it is in charge of managing the firewall rules to forward the traffic to the Connection Broker, so it is not a "mandatory" element. In practice, only the Connection Broker and the client are required to manage the configured VDIs. Connection Broker can be also integrated with Active Directory, Radius, VPNs, etc; so pwn one and jackpot! Leostream provides an old Connection Broker version as [VM flavour](https://www.leostream.com/resource/legacy-downloads/), so we can download it and ter it to pieces to check its guts.
 
-The VM comes with default user leo (and same password) so we can do SSH/SCP easily to interact with the filesystem. The first thing that caught our attention was... Perl. The entire platform is build on top of Perl scripts. Great, so we can just `cat` and `grep` to find common vulnerability patterns within the scripts... except that we can't. The files are encrypted. **WTF?**
+The VM comes with default user leo (and same password) so we can easily interact with the filesystem through SSH/SCP. The first thing that caught our attention was... Perl. The entire platform is build on top of Perl scripts. Great, so we can just `cat` and `grep` to find common vulnerability patterns within the scripts... except that we can't. The files are encrypted. **WTF?**
 
 # Diving in Perl forums
 
@@ -46,7 +46,7 @@ ee071bfccb6c2a1b80c1861db313cd3af37135d3dc385b2c03979e13818536b48d28be12eb1dc93d
 
 So we took our whip and hat from that Indiana Jones halloween costume and started to do a bit of archaeological google-fu, finding that encrypted sources in the perl world was a "common" practice in the old days. This encryption is made via ["source filters"](https://perldoc.perl.org/perlfilter.html), which are programs that can be executed between the file is read and it reaches the perl parser. The original encrypted file is read and saved in memory, then the source filters are called and the code is transformed (in our case decrypted) and finally arrives to the parser where it follows the normal flow as any other script.
 
-This "encryption" is futile as we have access to the files and to the whole VM with root privileges, so we can peek directly the memory to check what is going on. The web platform works on an Apache (httpd) with mod_perl, so that process must load a some point a shared object with the logic to decrypt the perl modules. 
+This "encryption" is futile as we have access to the files and to the whole VM with root privileges, so we can peek directly the memory to check what is going on. The web platform works on an Apache (httpd) with mod_perl, so the process must load at some point a shared object with the logic to decrypt the perl modules. 
 
 ```
 [leo@localhost tpc]$ sudo cat /proc/$(pidof httpd | cut -d" " -f1)/maps | grep -i filter
@@ -55,7 +55,7 @@ This "encryption" is futile as we have access to the files and to the whole VM w
 7fc862953000-7fc862954000 rw-p 00004000 fd:00 263163                     /opt/lib/perl5/site_perl/5.10.1/auto/Filter/Crypto/Decrypt/Decrypt.so
 ```
 
-Let's download and try to figure out how it decrypts the files. Here we are going to explain how old versions of Leostream are encrypted (we are working with 8.2.37.0), but more recent releases uses a different approach inside their Decrypt.so. First locate if it imports any function from perl related to parsing:
+Let's download and try to figure out how it decrypts the files. Here we are going to explain how old versions of Leostream are encrypted (we are working with 8.2.37.0), but more recent releases use a different approach inside their Decrypt.so. First locate any imported perl function related to parsing:
 
 ```
 0x00001c20]> ii~parser
@@ -73,7 +73,7 @@ sym.FilterCrypto_FilterDecrypt 0x3450 [DATA] mov esp, dword [rip + 0x200e32]
 
 ```
 
-Ok, so that `FilterCrypto_FilterDecrypt` is our target function. If we disassemble it we can see that it calls functions from OpenSSL:
+Ok, so that `FilterCrypto_FilterDecrypt` is our target function. When disassembled, it shows OpenSSL functions being called:
 
 ```
 ...
@@ -150,7 +150,7 @@ lost sys.stderr
 
 # Finding a stored XSS :( 
 
-With the source code decrypted becomes an easy task to understand how it works internally. After reading a few files we can observe a common pattern: some (user controlled) data is saved to the database just escaping single quotes to avoid SQL injections, and then this content is showed at other point of the web platform in raw. For example, in WebQuery.pm:
+With the source code decrypted, understanding how it works internally becomes an easy task. After reading a few files we can observe a common pattern: some (user controlled) data is saved to the database just escaping single quotes to avoid SQL injections, and then this content is showed at other point of the web platform in raw. For example, in WebQuery.pm:
 
 ```perl
 sub login {
@@ -180,7 +180,7 @@ sub login {
 ...
 ```
 
-In this snippet of code we can see how the application calls `libMisc::browser_client()`, and then set some fields and search the "client". If it is new, then the data is saved to the database. Let's check `browser_client()` from `libMisc.pm`:
+In this code snippet we can see how the application calls `libMisc::browser_client()`, sets some fields, and then searches the "client". If it is new, then the data is saved to the database. Let's check `browser_client()` from `libMisc.pm`:
 
 ```perl
 # Return a Client-formatted recordset about the current browser
@@ -207,7 +207,7 @@ sub browser_client {
 }
 ```
 
-It takes a lot of fields that are controlled by us and, in the end, they are going to be saved to the database as we saw before. The strings are not escaped before they are stored in the database, and also they are not escaped when they are rendered in the web, so we have a stored XSS. 
+It takes a lot of user-controlled fields that, in the end, are going to be saved to the database as we saw before. The strings are not escaped before they are stored in the database, and also they are not escaped when they are rendered in the web, so we have a stored XSS. 
 
 But... this information is stored before the login credentials are checked, **so we can inject our payload without authentication :)**
 
@@ -215,17 +215,17 @@ But... this information is stored before the login credentials are checked, **so
 curl http://remote-target/webquery.pl\?action\=run\&method\=qselect\&user\=AdeptsOf0xCC\&password\=RKL -H "User-Agent: <script>alert(/pwned/)</script>"
 ```
 
-As we said before, this same code pattern can be spoted in other files.
+As stated before, this same code pattern can be spoted in other files.
 
-# Turning the lousy XSS into a RCE as root :)
+# Turning the lousy XSS into an RCE as root :)
 
-The recipe to turn a XSS into a RCE in any web platform usually is the same:
+The recipe to turn an XSS into an RCE in any web platform is usually the same:
 - 4oz plugin uploader
 - A few drops of injected JavaScript
 
-But this time our XSS-To-RCE-cupcake has a twist: internal URLs are protected by a digest to avoid anti-tampering, so we can not just upload our webshell directly with a request. Let's dig a bit on this.
+But this time our XSS-to-RCE-cupcake has a twist: internal URLs are protected by a digest to avoid anti-tampering, so we can not just upload our webshell directly with a request. Let's dig a bit into this.
 
-Leostreams protects the URLs from tampering adding a parameter, `r`, with a digest value that is generated via `digest_of_url` from `libMisc.pm`:
+Leostream protects the URLs from tampering adding a parameter, `r`, with a digest value that is generated via `digest_of_url` from `libMisc.pm`:
 
 ```perl
 ...
@@ -242,7 +242,7 @@ my $digest = md5_base64((join '!',
     return $digest;
 ```
 
-This digest has a random component that is updated everytime, so if you refresh the web the `r` values are changed:
+This digest has a random component that is updated every time, so if you refresh the web the `r` values are changed:
 ```
 clients.pl?uid=cHvoum7HQN64ywj3qTeCSQMM94TxrNTge62gnUXYkKQ;mb_user=remote_authentication;r=J0qimdk1465
 clients.pl?uid=cHvoum7HQN64ywj3qTeCSQMM94TxrNTge62gnUXYkKQ;mb_user=remote_authentication;r=DyslJw14661
@@ -251,15 +251,15 @@ clients.pl?uid=cHvoum7HQN64ywj3qTeCSQMM94TxrNTge62gnUXYkKQ;mb_user=remote_authen
 ```
 Here are our problems: 
 
-- **Problem #1**: we can not predict this value, so we can not send directly a POST request to upload our webshell. We need to force the navigation and extract the `r` generated.
-- **Poblem #2**: the form used to upload third-party compontents is located inside a subsection. We need to go first to the "section", and then navigate to the "subsection", also filling some forms in the path.
+- **Problem #1**: we can not predict this value, so we can not just send a POST request to upload our webshell. We need to force the navigation and extract the `r` generated.
+- **Poblem #2**: the form used to upload third-party compontents is located inside a subsection. We first need to go to the "section", and then navigate to the "subsection", also filling some forms in the way.
 
 Solution: two iframes. Not a charming solution, but it works. Our payload should:
 1. Locate the link to the "system" section. We can get it accessing the DOM (`document.getElementsByTagName("a")[4]["href"]`)
-2. Open a iframe to this location (iframe "pwn1")
+2. Open an iframe to this location (iframe "pwn1")
 3. Wait until it is loaded and extract the link to the subsection "Maintance" from its DOM (`window.frames["pwn1"].contentDocument.getElementsByTagName("a")[14]["href"]`)
-4. Create a new iframe to this new location (iframe "pwn2") and wait to be loaded
-5. Find the form inside this second iframe and autosubmit it setting the value to "Upload third-party content" (`window.frames["pwn2"].contentDocument.forms[0]["todo"].value = "upload_tpc"`)
+4. Create a new iframe to this new location (iframe "pwn2") and wait for it to load
+5. Find the form inside this second iframe and auto-submit it setting the value to "Upload third-party content" (`window.frames["pwn2"].contentDocument.forms[0]["todo"].value = "upload_tpc"`)
 6. Wait until the iframe is reloaded (because of the submited form)
 7. Now finally we are at the "upload file" form (`window.frames["pwn2"].contentDocument.forms[0]["action"]`) and we can read the URL to do the request to upload our webshell (just `fetch()`).
 
