@@ -11,7 +11,7 @@ Dear Fell**owl**ship, today's homily is about a journey that begins with a few p
 
 
 # Prayers at the foot of the Altar a.k.a. disclaimer
-*We reported the vulnerability to Leostream, but the tickets opened within their support platform went refused because we did not provided a customer license. We attempted to contact them again by email and twitter aswel without any luck. In this post we talk about version 8.2.37.0, this vulnerability may or may not be present in more recents versions. After all of our attemps and being the support for 8.2 branch ended this 30th September, we wrote this brief article.*
+*We reported the vulnerability to Leostream, but the tickets opened within their support platform went refused because we did not provided a customer license. We attempted to contact them again by email and twitter aswel without any luck. In this post we talk about version 8.2.37.0, this vulnerability may or may not be present in more recents versions. After all of our attempts and being the support for 8.2 branch ended this 30th September, we wrote this brief article.*
  
 # Introduction
 
