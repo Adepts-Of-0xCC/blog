@@ -3,7 +3,7 @@ title: Adepts of 0xCC # site title
 description: >- # site description
   A brotherhood of owls praying to the debugger God.<p><a href="https://twitter.com/AdeptsOf0xCC" target="_blank" rel="noopener">@AdeptsOf0xCC</a></p>
 lang: en-US # default lang
-timezone: Asia/Jakarta # set your timezone
+timezone: Europe/Madrid # set your timezone
 image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
 repo: https://github.com/piharpi/jekyll-klise # site repo [optional]
 mode: dark # default theme "dark" | "light"
@@ -21,7 +21,7 @@ author:
   avatar: /assets/img/0xCC.png # change with your own avatar
 
 # URL settings
-url: "https://klise.now.sh" #
+url: "https://adepts.of0x.cc" #
 baseurl:
 permalink: /:title/
 google_analytics: # leave it blank if not wish
