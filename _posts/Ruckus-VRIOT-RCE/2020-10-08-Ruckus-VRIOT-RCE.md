@@ -1,7 +1,7 @@
 ---
 title: "Remote Command Execution in Ruckus IoT Controller (CVE-2020-26878 & CVE-2020-26879)"
-date: 2020-10-26 00:00:00 +07:00
-modified: 2020-10-26 00:00:00 +07:00
+date: 2020-10-26 00:00:00 +00:00
+modified: 2020-10-26 00:00:00 +00:00
 tags: [vulnerabilities, research, X-C3LL]
 description: Description of a RCE found in Ruckus vriot. Proof of Concept inside.
 image: 
