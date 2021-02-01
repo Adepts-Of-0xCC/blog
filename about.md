@@ -13,3 +13,5 @@ We are just a group of owls addicted to pwn things for fun. Members:
 - [@mamatb](https://twitter.com/m_amatb)
 - [@_Laox](https://twitter.com/_Laox)
 - [@Mari0Bartolome](https://twitter.com/Mari0Bartolome)
+- [@Lockedbyte](https://twitter.com/Lockedbyte)
+- [@B1ackGamba](https://twitter.com/b1ackGamba)
