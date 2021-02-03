@@ -9,8 +9,11 @@ image:
 
 Dear Fell**owl**ship, today's homily is a _how-to_ on hiding your sinful connections inside connections made by legitimate programs using the ShadowMove technique. Please, take a seat and listen to the story.
 
+
 # Prayers at the foot of the Altar a.k.a. disclaimer
 *This time we are going to show two crappy PoCs using ShadowMove to hide connections made by our offensive software. The first one is fully reliable, but the second has its own issues that must be solved if you are going to use it in a real operation. We'll discuss those issues at the end of the post. Being that said: enjoy the reading!*
+
+**Edit 2021/02/03: Alex Ionescu contacted us via twitter to tells us that the "ShadowMove" paper is based on previous work made by himself and [@yarden_shafir](https://twitter.com/yarden_shafir). We provide here the link to their blog: [Faxing Your Way to SYSTEM — Part Two](https://windows-internals.com/faxing-your-way-to-system/
 
 # A gentle introduction to ShadowMove
 
