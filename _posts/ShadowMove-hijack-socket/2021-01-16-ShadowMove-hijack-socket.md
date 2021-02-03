@@ -13,7 +13,12 @@ Dear Fell**owl**ship, today's homily is a _how-to_ on hiding your sinful connect
 # Prayers at the foot of the Altar a.k.a. disclaimer
 *This time we are going to show two crappy PoCs using ShadowMove to hide connections made by our offensive software. The first one is fully reliable, but the second has its own issues that must be solved if you are going to use it in a real operation. We'll discuss those issues at the end of the post. Being that said: enjoy the reading!*
 
-**Edit 2021/02/03: Alex Ionescu contacted us via twitter to tells us that the "ShadowMove" paper is based on previous work made by himself and [@yarden_shafir](https://twitter.com/yarden_shafir). We provide here the link to their blog: [Faxing Your Way to SYSTEM — Part Two](https://windows-internals.com/faxing-your-way-to-system/)**
+
+**Edit 2021/02/03: Alex Ionescu contacted us via twitter to tells us that the “ShadowMove” technique was used previously by himself and [@yarden_shafir](https://twitter.com/yarden_shafir). We provide here the link to their blog: [Faxing Your Way to SYSTEM — Part Two](https://windows-internals.com/faxing-your-way-to-system/)**
+
+**Edit 2021/02/03: One of the authors ([@DissectMalware](https://twitter.com/DissectMalware)) contacted us via twitter to explain that their paper was accepted at USENIX 2020 in late 2019 and prior to the "FaxHell" blog**
+
+**Edit 2021/02/03: Both researchers agreed that this was a classic collision doing research about the same topic. In our opinion everyone had good faith but social networks tends to twist this kind of situations.**
 
 # A gentle introduction to ShadowMove
 
