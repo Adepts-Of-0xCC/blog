@@ -168,7 +168,7 @@ k                       // and, finally, print the backtrace
 Taking a look at the backtrace produced once the execution flow arrives to `NtWriteFile`, we can see how the last call inside `dbgcore.dll`,before letting the OS take care of the file-writing process, is made from a function called `WriteAll` laying inside the `Win32FileOutputProvider`. 
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/WinDbg-backtrace.png" alt="WinDbg backtrace from NtWriteFile at MiniDumpWritedump"> 
+<img src="/hookson-hootoff/WinDbg-backtrace.png" alt="WinDbg backtrace from NtWriteFile at MiniDumpWritedump"> 
 <figcaption>
 WinDbg backtrace.
 </figcaption>
@@ -185,7 +185,7 @@ By peeking a little bit more into the `WriteAll` function, we determined that th
 
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/dbgcore-WriteAll-dec.png" alt="dbgcore.dll!Win32FileOutputProvider::WriteAll disass"> 
+<img src="/hookson-hootoff/dbgcore-WriteAll-dec.png" alt="dbgcore.dll!Win32FileOutputProvider::WriteAll disass"> 
 <figcaption>
 dbgcore.dll!Win32FileOutputProvider::WriteAll disassembly
 </figcaption>
@@ -196,7 +196,7 @@ dbgcore.dll!Win32FileOutputProvider::WriteAll disassembly
 Inspecting the memory at the direction given in [rdx] we can see the beginning of the dump file. 
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/dbgcore-WriteAll-rdx.png" alt="dbgcore.dll!Win32FileOutputProvider::WriteAll buffer at rdx"> 
+<img src="/hookson-hootoff/dbgcore-WriteAll-rdx.png" alt="dbgcore.dll!Win32FileOutputProvider::WriteAll buffer at rdx"> 
 <figcaption>
 dbgcore.dll!Win32FileOutputProvider::WriteAll Memory pointed by [rdx]
 </figcaption>
@@ -215,7 +215,7 @@ In this case, to detour the function execution, a direct memory write was implem
 Originally, it would look like this: 
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/original-exec-flow.png" alt="Original execution flow schema"> 
+<img src="/hookson-hootoff/original-exec-flow.png" alt="Original execution flow schema"> 
 <figcaption>
 Original execution flow schema
 </figcaption>
@@ -232,7 +232,7 @@ jmp r10
 
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/modified-exec-flow.png" alt="Modified execution flow schema"> 
+<img src="/hookson-hootoff/modified-exec-flow.png" alt="Modified execution flow schema"> 
 <figcaption>
 Modified execution flow schema
 </figcaption>
@@ -377,7 +377,7 @@ Once obtained, we could easily tell our receiving server where in the file it sh
 ```
 
 <figure>
-<img src="/HooksOn-HootOff-VitaminizingMiniDump/exfiltration-success.png" alt="Buffer exfiltrations succeded"> 
+<img src="/hookson-hootoff/exfiltration-success.png" alt="Buffer exfiltrations succeded"> 
 <figcaption>
 Dump reconstruction from received buffer
 </figcaption>
