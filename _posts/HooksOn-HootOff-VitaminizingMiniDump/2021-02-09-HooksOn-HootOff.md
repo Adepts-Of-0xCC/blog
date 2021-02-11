@@ -12,7 +12,7 @@ Dear Fell**owl**ship, today's homily is about how we overcame an AV/EDR which, i
 # Prayers at the foot of the Altar a.k.a. disclaimer
 
 *As you may already know, `MiniDumpWriteDump` receives, among others, a handle to an already opened or created file. 
-This is a PoC about how to overcome the limitation imposed by this function, which will take care of the whole _memory-read/write-buffer-to-file_ process.*
+This is a PoC about how to overcome the limitation imposed by this function, which will take care of the whole __memory-read/write-buffer-to-file__ process.*
 
 *It is recommended to perform this dance making use of API unhooking to make direct SYSCALLS to avoid AV/EDR hooks in place, as explained in the useful [Dumpert by Outflanknl](https://outflank.nl/blog/2019/06/19/red-team-tactics-combining-direct-system-calls-and-srdi-to-bypass-av-edr/), or by any other evasion method. There are a lot of good resources explaining the topic, so we are not going to cover it here.*
 
