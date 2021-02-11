@@ -390,7 +390,7 @@ Dump reconstruction from received buffer
 
 [SharpMiniDump with NTFS transactions](https://github.com/PorLaCola25/TransactedSharpMiniDump) by [PorLaCola25](https://github.com/PorLaCola25) based on [b4rtik's SharpMiniDump](https://github.com/b4rtik/SharpMiniDump)
 
-[Lsass Minidump file seen as Malicious by McAfee AV](https://www.bussink.net/lsass-minidump-file-seen-as-malicious-by-mcafee-av/) by [Frank](https://www.bussink.net/home/)
+[Lsass Minidump file seen as Malicious by McAfee AV](https://www.bussink.net/lsass-minidump-file-seen-as-malicious-by-mcafee-av/) by [K4nfr3](https://twitter.com/k4nfr3)
 
 
 
