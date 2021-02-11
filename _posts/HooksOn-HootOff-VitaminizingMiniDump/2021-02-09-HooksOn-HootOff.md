@@ -275,6 +275,7 @@ As stated before, the `_trampoline` should implement the following logic:
     - Write the hook again in the `WriteAll` function. 
 
 
+
 ```c
 UINT32 _hoot_trampoline(HANDLE file_handler, void* buffer, INT64 size) {
     
