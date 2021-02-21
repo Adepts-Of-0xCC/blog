@@ -7,7 +7,7 @@ description: Alternative ways to copy your shellcode to memory in your VBA macro
 image: 
 ---
 
-Dear Fell**owl**ship, today's homily is about how we can (ab)use different native Windows functions a to copy our shellcode to a RWX section in our VBA Macros. 
+Dear Fell**owl**ship, today's homily is about how we can (ab)use different native Windows functions to copy our shellcode to a RWX section in our VBA Macros. 
 
 
 # Prayers at the foot of the Altar a.k.a. disclaimer
