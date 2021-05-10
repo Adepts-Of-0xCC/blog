@@ -466,7 +466,7 @@ Now we can retrieve all the regions of virtual memory reserved, and the limits (
 
 But VADs contains other interesting metadata. For example, if the region is reserved for a image file, we can retrieve the path of that file. This is important for us because we want to locate the loaded lsasrv.dll inside the lsass process because from here is where we are going to loot credentials (imitating the Mimikatz's `sekurlsa::msv` to get NTLM hashes). 
 
-Let's take a ride thought the `__mmvad` struct (follow the arrows!):
+Let's take a ride through the `__mmvad` struct (follow the arrows!):
 
 ```
 lkd> dt nt!_mmvad 0xffffe786`ed185cf0
