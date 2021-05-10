@@ -762,7 +762,7 @@ To recap at this point we:
 1. Can translate virtual addresses to physical
 2. Got the location of the LsaSrv.dll module inside the lsass process memory
 
-# Stray Mimikatz Strut sings Runnaway Boys
+# Stray Mimikatz sings Runnaway Boys
 
 This time we are only interested in retrieving NTLM Hashes, so we are going to implement something like the `sekurlsa::msv` from Mimikatz as PoC (once we have located the process memory, and its modules, it is trivial to imitate any functionatility from Mimikatz so I picked the quickier to implement as PoC). 
 
