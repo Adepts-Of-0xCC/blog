@@ -220,7 +220,7 @@ Proof of Concept working like a charm
 </figcaption>
 </figure>
 
-EDIT (2021/06/19): A reader pointed us that "Control001" is the "normal" controlset, but in some scenarios the number can change (002, 003, etc.) so instead of using it directly we should check [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet](https://renenyffenegger.ch/notes/Windows/registry/tree/HKEY_LOCAL_MACHINE/System/CurrentControlSet/) before.
+EDIT (2021/06/19): A reader pointed us that "Control001" is the "normal" controlset, but in some scenarios the number can change (002, 003, etc.) so instead of using it directly we should use [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet](https://renenyffenegger.ch/notes/Windows/registry/tree/HKEY_LOCAL_MACHINE/System/CurrentControlSet/) before.
 
 # EoF
 As we stated at the beginning this short article is not about "netsh" or the "PortProxy" functionality. We aim higher: we want to encourage you to stop using commands blindly and to start to dig inside what is doing your machine. Explore and learn the internals of everything you do on an red team operation or a pentest. 
