@@ -295,7 +295,7 @@ Looping through operation codes.
 </figcaption>
 </figure>
 
-The best candidate looks like is the [GetBackupListRequest](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-brws/2fa4f92f-9c59-47dc-87b5-4333360f8593) command. It uses the **`0x09`** as opcode:
+The best candidate looks like to be the [GetBackupListRequest](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-brws/2fa4f92f-9c59-47dc-87b5-4333360f8593) command. It uses the **`0x09`** as opcode:
 
 <figure>
 <img src="/Connectionless-shells/GetBackupListRequest.png" alt="GetBackupListRequest description">
@@ -330,7 +330,7 @@ Secondly, in our PoC we are just using **one** port to transfer the information 
 - Second port to read the inputs (as we are doing right now)
 - Third port to stop the "shell" mode and enter in sleeping mode again
 
-Also something really, really, really important: when the first port is hitted (the "wake up") we have to save the IP which contacted us, and then **use it as criteria to meet in our events of reading inputs**. This matters a lot to avoid the insertion of corruped data because we are reading stray packets from other machines. We need to match the port choosen to carry the input **AND** the IP who made us wake up. 
+Also something really, really, really important: when the first port is hitted (the "wake up") we have to save the IP which contacted us, and then **use it as criteria to meet in our events of reading inputs**. This matters a lot to avoid the insertion of corrupted data because we are reading stray packets from other machines. We need to match the port choosen to carry the input **AND** the IP who made us wake up. 
 
 For this very same reason to wake up we need to add an extra condition: not only a selected port has to be knocked, the source port has to be one that would not be used in a natural environment (for example 666).
 
