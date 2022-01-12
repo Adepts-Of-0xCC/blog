@@ -11,7 +11,7 @@ Dear Fell**owl**ship, today's homily is about how we can (ab)use different nativ
 
 
 # Prayers at the foot of the Altar a.k.a. disclaimer
-*The topic is __old__ and basic, but with the recent analysis of the Lazarus' maldocs it feels like discussing this technique maybe can be handy at this moment.*
+*The topic is __old__ and basic, but with the recent analysis of the Lazarus' maldocs it feels like discussing this technique may come in handy at this moment.*
 
 # Introduction
 As shown by NCC in his article "[RIFT: Analysing a Lazarus Shellcode Execution Method](https://research.nccgroup.com/2021/01/23/rift-analysing-a-lazarus-shellcode-execution-method/)" Lazarus Group used maldocs where the shellcode is loaded and executed without calling any of the classical functions. To achieve it the VBA macro used `UuidFromStringA` to copy the shellcode to the RWX region and then triggered its execution via `lpLocaleEnumProc`. The `lpLocaleEnumProc` was previously documented by [@noottrak](https://twitter.com/noottrak) in his article "[Abusing native Windows functions for shellcode execution](http://ropgadget.com/posts/abusing_win_functions.html)".
