@@ -70,7 +70,7 @@ krb5_get_init_creds_password(krb5_context context,
                              krb5_get_init_creds_opt *options)
 ```
 
-As we can see this functions has an argument "password" that is a pointer to a string, but as the [documentation](https://web.mit.edu/kerberos/www/krb5-latest/doc/appdev/refs/api/krb5_get_init_creds_password.html) states this value can be null (in which case a prompt is called, like is doing in `kinit`). This function also uses a pointer to a `krb5_creds` struct that is defined as:
+As we can see this function has an argument "password" that is a pointer to a string, but as the [documentation](https://web.mit.edu/kerberos/www/krb5-latest/doc/appdev/refs/api/krb5_get_init_creds_password.html) states this value can be null (in which case a prompt is called, like is doing in `kinit`). This function also uses a pointer to a `krb5_creds` struct that is defined as:
 
 ```c
 typedef struct _krb5_creds {
