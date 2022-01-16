@@ -91,7 +91,7 @@ typedef struct _krb5_creds {
 } krb5_creds;
 ```
 
-So we can get the username and (if is set) the password used to authenticate. If the password is not provided, we need to check how the prompt is used. The function `krb5_prompter_posix` is defined as:
+So we can get the username and (if set) the password used to authenticate. If the password is not provided, we need to check how the prompt is used. The function `krb5_prompter_posix` is defined as:
 ```c
 krb5_error_code KRB5_CALLCONV
 krb5_prompter_posix(
