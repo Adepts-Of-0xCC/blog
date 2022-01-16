@@ -396,7 +396,7 @@ Dump reconstruction from received buffer
 
 # EoF
 
-Although this wasn't an incredible discovery, playing with memory is always fun ^o^
+Although this wasn't an incredible discovery, playing with memory is always fun ^o^.
 Also, if you made it to the end of this article, you might want the full code of this PoC. Available as usual [in our GitHub, Adepts-Of-0xCC](https://github.com/Adepts-Of-0xCC/MiniDumpWriteDumpPoC)
 
 Feel free to give us feedback at our twitter [@AdeptsOf0xCC](https://twitter.com/AdeptsOf0xCC).
