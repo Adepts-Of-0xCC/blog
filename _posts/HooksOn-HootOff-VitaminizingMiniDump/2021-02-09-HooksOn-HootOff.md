@@ -165,7 +165,7 @@ g                       // go (continue execution)
 k                       // and, finally, print the backtrace 
 ```
 
-Taking a look at the backtrace produced once the execution flow arrives to `NtWriteFile`, we can see how the last call inside `dbgcore.dll`,before letting the OS take care of the file-writing process, is made from a function called `WriteAll` laying inside the `Win32FileOutputProvider`. 
+Taking a look at the backtrace produced once the execution flow arrives to `NtWriteFile`, we can see how the last call inside `dbgcore.dll`, before letting the OS take care of the file-writing process, is made from a function called `WriteAll` laying inside the `Win32FileOutputProvider`. 
 
 <figure>
 <img src="/hookson-hootoff/WinDbg-backtrace.png" alt="WinDbg backtrace from NtWriteFile at MiniDumpWritedump"> 
