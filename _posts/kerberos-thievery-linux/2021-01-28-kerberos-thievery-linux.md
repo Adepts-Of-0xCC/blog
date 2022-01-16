@@ -484,7 +484,7 @@ The size is located just before the pointer, so you can retrieve it to know how 
 
 # Playing with the ccache (III): kernel keyrings
 
-Programas can use in-kernel storage inside keyrings because it offers far more proteccion than the storage via ccache files. This kind of storage has the advantage that only the user can acces to this information via `keyctl`. To thief those juicy tickets we can inject a small stub of code inside processes owned by each user in the compromised machine, and this code will ask the tickets. Easy peasy!
+Programs can use in-kernel storage inside keyrings because it offers far more proteccion than the storage via ccache files. This kind of storage has the advantage that only the user can acces to this information via `keyctl`. To thief those juicy tickets we can inject a small stub of code inside processes owned by each user in the compromised machine, and this code will ask the tickets. Easy peasy!
 
 Our friend [@Zer1t0](https://twitter.com/zer1t0) developed a tool called [Tickey](https://github.com/Zer1t0/tickey/tree/master/tickey) that does all this job for us:
 
