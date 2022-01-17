@@ -14,7 +14,7 @@ Dear Fell**owl**ship, today's homily is about how a fool started to play with th
 
 # Introduction
 
-This post came after crafting a small PoC to satisfy our curiosity. The tactic of keeping a few compromised machines "quiet" (without communication with the C2) until a pre-shared combination of ports are hitted is something that [@TheXC3LL](https://twitter.com/TheXC3LL) shared in his article "[Stealthier communications & Port Knocking via Windows Filtering Platform (WFP)](https://x-c3ll.github.io/posts/windows-port-knocking/)". 
+This post came after crafting a small PoC to satisfy our curiosity. The tactic of keeping a few compromised machines "quiet" (without communication with the C2) until a pre-shared combination of ports are hit is something that [@TheXC3LL](https://twitter.com/TheXC3LL) shared in his article "[Stealthier communications & Port Knocking via Windows Filtering Platform (WFP)](https://x-c3ll.github.io/posts/windows-port-knocking/)". 
 
 In the article our owl explained how some **"clean boxes"** are left behind until its retake is needed. When the Red Team needs to reactivate the communication with its implant they just "knock" on a few predefined ports and the implant wakes up again. To do this the implant uses the **Windows Filtering Platform** APIs in order to monitor the firewall events and to check for incomming UDP packets (source and destionation port/ip), if the predefined condition is met then it connects back to a fallback C2 or just fire a reverse shell.
 
@@ -330,7 +330,7 @@ Secondly, in our PoC we are just using **one** port to transfer the information 
 - Second port to read the inputs (as we are doing right now)
 - Third port to stop the "shell" mode and enter in sleeping mode again
 
-Also something really, really, really important: when the first port is hitted (the "wake up") we have to save the IP which contacted us, and then **use it as criteria to meet in our events of reading inputs**. This matters a lot to avoid the insertion of corrupted data because we are reading stray packets from other machines. We need to match the port choosen to carry the input **AND** the IP who made us wake up. 
+Also something really, really, really important: when the first port is hit (the "wake up") we have to save the IP which contacted us, and then **use it as criteria to meet in our events of reading inputs**. This matters a lot to avoid the insertion of corrupted data because we are reading stray packets from other machines. We need to match the port choosen to carry the input **AND** the IP who made us wake up. 
 
 For this very same reason to wake up we need to add an extra condition: not only a selected port has to be knocked, the source port has to be one that would not be used in a natural environment (for example 666).
 
