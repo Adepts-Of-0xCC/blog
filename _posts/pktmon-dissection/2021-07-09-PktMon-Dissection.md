@@ -329,7 +329,7 @@ Working PoC. Communication sniffed succesfully!
 </figure>
 
 
-**Keep in mind that in this PoC we did not clean up nothing!!**. For that you need to add code that:
+**Keep in mind that in this PoC we did not clean up anything!!**. For that you need to add code that:
 
 - Kindly ask the driver to stop capturing and stop the service (check PktMonAPI.dll **;**))
 - Disable the trace session (check `EVENT_CONTROL_CODE_DISABLE_PROVIDER` and `EVENT_TRACE_CONTROL_STOP`)
