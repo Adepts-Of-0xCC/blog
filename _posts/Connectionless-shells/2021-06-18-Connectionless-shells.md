@@ -233,7 +233,7 @@ int main(int argc, char** argv[]) {
 }
 ```
 
-Now we can try to send packets against a predefined port (for example, 123/UDP), encoding a message inside the source ports. Keep in mind that we don't care about the content because our information is carried as the source port (this means: please, try to make the payload the more similar possible to a real and "regular" packet based in the protocol that you are trying to simulate).
+Now we can try to send packets against a predefined port (for example, 123/UDP), encoding a message inside the source ports. Keep in mind that we don't care about the content because our information is carried as the source port (this means: please, try to make the payload as similar as possible to a real and "regular" packet based in the protocol that you are trying to simulate).
 
 ```python
  import sys
