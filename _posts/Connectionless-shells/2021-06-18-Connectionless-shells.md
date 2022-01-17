@@ -326,7 +326,7 @@ To retrieve the information at our end we can sniff the network using Scapy:
 Before continuing we need to clarify some points that are to be taken into consideration. The most important: this kind of approach will only work if there is no network elements that could mask the source port. In complex infrastructures you need to be close (usually in the same network segment) in order to perform this technique. If a NAT-like device sits between you and the sleeping box it is most likely that the information encoded as source port is going to be overwritten.
 
 Secondly, in our PoC we are just using **one** port to transfer the information for the sake of brevity. In a real implant, you need to knock at least **three** different ports:
-- First port to wake up, create the cmd.exe child process and start to enter in "shell" mode
+- First port to wake up, create the cmd.exe child process and to enter in "shell" mode
 - Second port to read the inputs (as we are doing right now)
 - Third port to stop the "shell" mode and enter in sleeping mode again
 
