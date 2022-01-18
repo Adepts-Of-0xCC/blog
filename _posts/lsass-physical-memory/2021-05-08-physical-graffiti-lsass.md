@@ -408,7 +408,7 @@ ffffa48b`b01472f0  ffffa48b`b014da28 ffffa48b`b014da28
 ffffa48b`b0147300  ffffa48b`b016e081 00007ff6`43aa5002
 ```
 
-The first thing we can see is the pointer to the left node (offset 0x00-0x07) and the pointer to the right node (0x08-0x10). We have to add them to a queue and check them later, and add their respective new children nodes, repeating this operation in order to walk the whole tree. Also combining 4 bytes from 0x18 and 1 byte from 0x20 we get the starting address of the described memory region (the ending virtual addrees is obtained combining 4 bytes from 0x1c and 1 byte from 0x21). So we can walk the whole tree doing something like:
+The first thing we can see is the pointer to the left node (offset 0x00-0x07) and the pointer to the right node (0x08-0x10). We have to add them to a queue and check them later, and add their respective new children nodes, repeating this operation in order to walk the whole tree. Also combining 4 bytes from 0x18 and 1 byte from 0x20 we get the starting address of the described memory region (the ending virtual address is obtained combining 4 bytes from 0x1c and 1 byte from 0x21). So we can walk the whole tree doing something like:
 
 ```c
 //(...)
