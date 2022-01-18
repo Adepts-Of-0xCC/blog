@@ -16,7 +16,7 @@ Dear Fell**owl**ship, today's homily is about how one of our owls began his own 
 *Other important thing to keep in mind: the windows version used here is Windows 10 2009 20H2 (October 2020 Update).*
 
 # Preamble
-Hunting for juicy information inside dumps of physical memory is something that regular forensic tools does by default. Even cheaters have been exploring this way in the past to build wallhacks: read physical memory, find your desired game process and look for the player information structs.
+Hunting for juicy information inside dumps of physical memory is something that regular forensic tools do by default. Even cheaters have been exploring this way in the past to build wallhacks: read physical memory, find your desired game process and look for the player information structs.
 
 From a Red Teaming/Pentesting optics, this approach has been explored too in order to obtain credentials from the lsass process in live machines during engagements. For example, in 2020 F-Secure published an article titled "[Rethinking credential theft](https://labs.f-secure.com/blog/rethinking-credential-theft/)" and released a tool called "[PhysMem2Profit](https://github.com/FSecureLABS/physmem2profit)". 
 
