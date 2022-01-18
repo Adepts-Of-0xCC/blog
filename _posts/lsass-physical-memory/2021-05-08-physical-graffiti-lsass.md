@@ -232,7 +232,7 @@ Amd64VtoP: Large page mapped phys 0000000108d35640
 Virtual address ffffaa83f4b35640 translates to physical address 108d35640.
 ```
 
-What is it doing under the hood? Well, the picture of a 4KB page follows this explanation: if you turn the virtual address to its binary representation, you can split it into the indexes of each page level. So, imagine we want to translate the virtual address `0xffffa48bb0147290` and the process page base is `0x29556000` (let's assume is a 4kb page, later we will explain how to know it). 
+What is it doing under the hood? Well, the picture of a 4KB page follows this explanation: if you turn the virtual address to its binary representation, you can split it into the indexes of each page level. So, imagine we want to translate the virtual address `0xffffa48bb0147290` and the process page base is `0x29556000` (let's assume is a 4KB page, later we will explain how to know it). 
 
 ```
 lkd> .formats ffffa48bb0147290
@@ -327,7 +327,7 @@ Virtual address ffffa48bb0147290 translates to physical address 1645b290.
 Ta-dá!
 
 
-Here is a sample function that we are going to use to translate virtual addresses (4Kb and 2Mb) to physical (ugly as hell, but works):
+Here is a sample function that we are going to use to translate virtual addresses (4KB and 2MB) to physical (ugly as hell, but works):
 
 ```c
 ULONGLONG v2p(ULONGLONG vaddr) {
