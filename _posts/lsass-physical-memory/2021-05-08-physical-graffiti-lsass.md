@@ -11,9 +11,9 @@ Dear Fell**owl**ship, today's homily is about how one of our owls began his own 
 
 
 # Prayers at the foot of the Altar a.k.a. disclaimer
-*Our knowledge about the topic discussed in this article is limited, as we stated in the tittle we did this work just for __learning__ purposes. If you spot incorrections/misconceptions, please ping us at twitter so we can fix it. For a more accurate information (and deep explanations), please check the book "[Windows Internals](https://twitter.com/TheXC3LL/status/1366417199737548801)" (Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich & David A. Solomon). Also well-known forensic tools are a good source of information (for example [Volatility](https://github.com/volatilityfoundation/volatility))*
+*Our knowledge about the topic discussed in this article is limited, as we stated in the tittle we did this work just for __learning__ purposes. If you spot incorrections/misconceptions, please ping us at twitter so we can fix it. For a more accurate information (and deep explanations), please check the book "[Windows Internals](https://twitter.com/TheXC3LL/status/1366417199737548801)" (Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich & David A. Solomon). Also well-known forensic tools are a good source of information (for example [Volatility](https://github.com/volatilityfoundation/volatility)).*
 
-*Other important thing to keep in mind: the windows version used here is Windows 10 2009 20H2 (October 2020 Update)*
+*Other important thing to keep in mind: the windows version used here is Windows 10 2009 20H2 (October 2020 Update).*
 
 # Preamble
 Hunting for juicy information inside dumps of physical memory is something that regular forensic tools does by default. Even cheaters have been exploring this way in the past to build wallhacks: read physical memory, find your desired game process and look for the player information structs.
