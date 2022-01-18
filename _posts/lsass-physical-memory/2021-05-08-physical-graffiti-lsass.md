@@ -764,7 +764,7 @@ To recap at this point we:
 
 # Stray Mimikatz sings Runnaway Boys
 
-This time we are only interested in retrieving NTLM Hashes, so we are going to implement something like the `sekurlsa::msv` from Mimikatz as PoC (once we have located the process memory, and its modules, it is trivial to imitate any functionatility from Mimikatz so I picked the quickier to implement as PoC). 
+This time we are only interested in retrieving NTLM hashes, so we are going to implement something like the `sekurlsa::msv` from Mimikatz as PoC (once we have located the process memory, and its modules, it is trivial to imitate any functionatility from Mimikatz so I picked the quickier to implement as PoC). 
 
 This is well explained in the article "[Uncovering Mimikatz 'msv' and collecting credentials through PyKD](https://www.matteomalvica.com/blog/2020/01/20/mimikatz-lsass-dump-windg-pykd/)" from Matteo Malvica, so it is redundant to explain it again here... but in essence we are going to search for signatures inside lsasrv.dll and then retrieve the info needed to locate the `LogonSessionList` struct and the crypto keys/IVs needed. Also another good related article to read is "[Exploring Mimikatz - Part 1 - WDigest](https://blog.xpnsec.com/exploring-mimikatz-part-1/)" by [@_xpn_](https://twitter.com/_xpn_).
 
@@ -976,7 +976,7 @@ Let's decrypt with python (yeah, we know, we are the worst **:(**)
 '191d643eca7a6b94a3b6df1469ba2846'
 ```
 
-We can check that effectively the Administrador's NTLM hash is `191d643eca7a6b94a3b6df1469ba2846`:
+We can check that indeed the Administrador's NTLM hash is `191d643eca7a6b94a3b6df1469ba2846`:
 
 ```
 C:\Windows\system32>C:\Users\ortiga.japonesa\Downloads\mimikatz-master\mimikatz-master\x64\mimikatz.exe
