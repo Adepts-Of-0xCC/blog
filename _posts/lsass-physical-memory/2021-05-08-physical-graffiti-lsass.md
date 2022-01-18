@@ -311,7 +311,7 @@ lkd> !dq 4632170
 ```
 
 
-Just repeat the same operation until the end (except for the last 12 bits, those no need to by multiplied by 0x8) and you have translated successfully your virtual address! Don't trust me? Check it!
+Just repeat the same operation until the end (except for the last 12 bits, those don't need to be multiplied by 0x8) and you have successfully translated your virtual address! Don't trust me? Check it!
 
 ```
 kd> !vtop 0x29556000 0xffffa48bb0147290
