@@ -131,7 +131,7 @@ if __name__ == "__main__":
 ```
 
 
-As you can see, the script is just a rip off from [this post](https://www.thepythoncode.com/article/extract-chrome-cookies-python]) where the author of EvilNoVNC just deleted the part where the decryption of the cookie is done __:facepalm:__. 
+As you can see, the script is just a rip off from [this post](https://www.thepythoncode.com/article/extract-chrome-cookies-python) where the author of EvilNoVNC just deleted the part where the decryption of the cookie is done __:facepalm:__. 
 <figure>
 <img src="/NoVNC-phishing/sqlite.jpeg" alt="The cookies that you never will see">
 <figcaption>
