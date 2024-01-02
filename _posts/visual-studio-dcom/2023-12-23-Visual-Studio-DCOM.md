@@ -62,7 +62,7 @@ List of process in the remote machine
 </figcaption>
 </figure>
 
-...and more creative stuff like pausing a process (*wink wink* **;D**), attaching the debugger, and inserting a [break](https://learn.microsoft.com/en-us/dotnet/api/envdte80.debugger2.break?view=visualstudiosdk-2022#envdte80-debugger2-break(system-boolean)). You could also [read process memory](https://learn.microsoft.com/en-us/visualstudio/ide/reference/list-memory-command?view=vs-2022) or enable YOLO mode and [MiniDump](https://learn.microsoft.com/en-us/dotnet/api/envdte80.debugger2.writeminidump?view=visualstudiosdk-2022) it.
+...and more creative stuff like pausing a process (*wink wink* **;D**) attaching the debugger and inserting a [breakpoint](https://learn.microsoft.com/en-us/dotnet/api/envdte80.debugger2.break?view=visualstudiosdk-2022#envdte80-debugger2-break(system-boolean)). You could also [read process memory](https://learn.microsoft.com/en-us/visualstudio/ide/reference/list-memory-command?view=vs-2022) or go full YOLO mode and [MiniDump](https://learn.microsoft.com/en-us/dotnet/api/envdte80.debugger2.writeminidump?view=visualstudiosdk-2022) it.
 
 # EoF
 
