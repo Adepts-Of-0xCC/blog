@@ -20,6 +20,7 @@ Generally speaking, to a greater or lesser degree, any macro designed to self-in
 2. Copy the shellcode
 3. Set perms
 4. Trigger execution
+5. 
 Of course this is just an extremely summarized view of how this kind of macros works. In our times, where Initial Access has became far more difficult than 5 years ago,  additional stuff is needed to setup the injection: unhooking, syscalling, etc.
 
 In this blog I explored different functions that could be used to copy the shellcode to a buffer ("[One thousand and one ways to copy your shellcode to memory (VBA Macros)](https://adepts.of0x.cc/alternatives-copy-shellcode/)"). About how to trigger execution [@nootrak](https://twitter.com/nootrak) wrote an article called "[Abusing native Windows functions for shellcode execution](http://ropgadget.com/posts/abusing_win_functions.html)". Years later it was found one of these documented functions (`lpLocaleEnumProc`) being used by Lazarus group (“[RIFT: Analysing a Lazarus Shellcode Execution Method](https://research.nccgroup.com/2021/01/23/rift-analysing-a-lazarus-shellcode-execution-method/)”).
