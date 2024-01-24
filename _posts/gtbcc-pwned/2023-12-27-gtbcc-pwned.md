@@ -1,7 +1,7 @@
 ---
 title: "A christmas tale: pwning GTB Central Console (CVE-2024-22107 & CVE-2024-22108)"
-date: 2023-12-27 00:00:00 +00:00
-modified: 2023-12-27 00:00:00 +00:00
+date: 2024-01-23 00:00:00 +00:00
+modified: 2024-01-23 00:00:00 +00:00
 tags: [red team, research, DLP, GTBCC, GTB, CVE-2024-22107, CVE-2024-22108, exploit, X-C3LL]
 description: Yet another security platform being pwned by trivial vulnerabilities (CVE-2024-22107 & CVE-2024-22108)
 image: 
