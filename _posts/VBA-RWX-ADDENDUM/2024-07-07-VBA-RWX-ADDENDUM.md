@@ -15,7 +15,7 @@ Dear Fell**owl**ship, today's homily is an addendum to our previous homily "[VBA
 
 # A quick recap
 
-If you remember our article "[VBA: having fun with macros, overwritten pointers & R/W/X memory](https://adepts.of0x.cc/vba-hijack-pointers-rwa/)" we executed our shellcode by just using a primitive to move memory from point A to point B, so we could overwrite a pointer that would let us hijack the natural program flow and jump to our shellcode. Also we found that VBA is a sinner does nasty things like this:
+If you remember our article "[VBA: having fun with macros, overwritten pointers & R/W/X memory](https://adepts.of0x.cc/vba-hijack-pointers-rwa/)" we executed our shellcode by just using a primitive to move memory from point A to point B, so we could overwrite a pointer that would let us hijack the natural program flow and jump to our shellcode. Also we found that VBA is a sinner and does nasty things like this:
 
 ```c
 1800eec9c  long UpdatePageProtection(void* __ptr64 arg1, unsigned long arg2)
