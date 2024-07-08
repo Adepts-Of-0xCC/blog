@@ -262,9 +262,11 @@ Shellcode executed!
 
 
 # All that glitters is not gold
-This idea has tons of drawbacks. Although I have a reliable way to find the pointer to hijack, if I execute other stuff previously in the same process (e.g. a few innocent macros that do a lot of activity) sometimes (5%) the pointer I abuse is misplaced and I overwrite other that has no effect or it crashes the process.
+*Update[07/07/2024]: We found a reliable way to execute the whole chain, so there are no drabacks!. Check the technique in our article "[VBA: overwriting R/W/X memory in a reliable way](https://adepts.of0x.cc/VBA-RWX-ADDENDUM/)"*
 
-On the other hand, it can be difficult to handle a big shellcode as it is really easy to overwrite something critical. I am pretty sure there is a way to find suitable regions and avoid this issue, but my knowledge is very light on these matters.
+~This idea has tons of drawbacks. Although I have a reliable way to find the pointer to hijack, if I execute other stuff previously in the same process (e.g. a few innocent macros that do a lot of activity) sometimes (5%) the pointer I abuse is misplaced and I overwrite other that has no effect or it crashes the process.~
+
+~On the other hand, it can be difficult to handle a big shellcode as it is really easy to overwrite something critical. I am pretty sure there is a way to find suitable regions and avoid this issue, but my knowledge is very light on these matters.~
 
 # EoF
 
